@@ -3,6 +3,7 @@ const path = require('path')
 const expHbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const session = require('express-session')
+const indexRoutes = require('./routes/index.routes')
 
 const app = express()
 
@@ -24,6 +25,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+
+//Routes
+app.use(indexRoutes)
 
 // Server listening
 app.listen(process.env.PORT || 3000, () => {
