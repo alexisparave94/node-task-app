@@ -26,6 +26,9 @@ app.use(session({
   saveUninitialized: true
 }))
 
+//Static files
+app.use(express.static(path.join(__dirname, 'public')))
+
 //Routes
 app.use(indexRoutes)
 
