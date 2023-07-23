@@ -6,6 +6,7 @@ const session = require('express-session')
 const indexRoutes = require('./routes/index.routes')
 
 const app = express()
+require('./config/db')
 
 //Settings
 app.set('views', path.join(__dirname, 'views'))
