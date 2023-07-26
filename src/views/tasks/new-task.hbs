@@ -1,3 +1,9 @@
+{{#each errors }}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{{/each }}
 <div class="col-md-4 mx-auto mt-4">
   <div class="card">
     <div class="card-header">
@@ -6,10 +12,10 @@
     <div class="card-body">
       <form action="/tasks" method="POST">
         <div class="mb-3">
-          <input type="text" name="title" placeholder="Title" class="form-control" autofocus>
+          <input type="text" name="title" placeholder="Title" class="form-control" value="{{title}}" autofocus>
         </div>
         <div class="mb-3">
-          <textarea name="description" placeholder="Description" class="form-control"></textarea>
+          <textarea name="description" placeholder="Description" class="form-control">{{description}}</textarea>
         </div>
         <div>
           <button class="btn btn-primary form-control" type="submit">
