@@ -3,8 +3,8 @@ const router = express.Router()
 const Task = require('../models/Task')
 
 router.get('/', async (req, res) => {
-  const tasks = Task.find()
-  res.render('tasks')
+  const tasks = await Task.find().sort({ date: 'desc' }).lean()
+  res.render('tasks', { tasks })
 })
 
 router.get('/new', (req, res) => {

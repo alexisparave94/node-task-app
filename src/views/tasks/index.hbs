@@ -1,1 +1,12 @@
-<h1>Tasks</h1>
+<div class="row mt-4">
+  {{#each tasks}}
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h4>{{ title }}</h4>
+          <p>{{ description }}</p>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>
