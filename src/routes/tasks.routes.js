@@ -1,15 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const Note = require('../models/Note')
+const Task = require('../models/Task')
 
 router.get('/new', (req, res) => {
-  res.render('notes/new-note')
+  res.render('tasks/new-task')
 })
 
 router.post('/', async (req, res) => {
   const { title, description } = req.body
-  const newNote = new Note({ title, description })
-  await newNote.save()
+  const newTask = new Task({ title, description })
+  await newTask.save()
   res.send('ok')
 })
 

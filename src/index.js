@@ -4,7 +4,7 @@ const expHbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const indexRoutes = require('./routes/index.routes')
-const notesRoutes = require('./routes/notes.routes')
+const taskRouter = require('./routes/tasks.routes')
 
 const app = express()
 require('./config/db')
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //Routes
 app.use(indexRoutes)
-app.use('/notes', notesRoutes)
+app.use('/tasks', taskRouter)
 
 // Server listening
 app.listen(process.env.PORT || 3000, () => {

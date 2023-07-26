@@ -6,4 +6,4 @@ const noteSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 })
 
-module.exports = mongoose.model('Note', noteSchema)
+module.exports = mongoose.model('Task', noteSchema)
