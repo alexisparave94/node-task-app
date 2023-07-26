@@ -13,9 +13,18 @@ router.get('/new', (req, res) => {
 
 router.post('/', async (req, res) => {
   const { title, description } = req.body
-  const newTask = new Task({ title, description })
-  await newTask.save()
-  res.redirect('/tasks')
+  const errors = []
+
+  if(!title) errors.push({ message: 'Please write a title' })
+  if(!description) errors.push({ message: 'Please write a description' })
+
+  if(errors.length > 0) {
+    res.render('tasks/new-task', { errors, title, description })
+  } else {
+    const newTask = new Task({ title, description })
+    await newTask.save()
+    res.redirect('/tasks')
+  }
 })
 
 module.exports = router
