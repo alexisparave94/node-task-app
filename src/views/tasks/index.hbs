@@ -1,4 +1,4 @@
-<div class="row mt-4">
+<div class="d-flex mt-4">
   {{#each tasks}}
     <div class="col-md-3 mb-3">
       <div class="card">
@@ -6,6 +6,13 @@
           <h4>{{ title }}</h4>
           <p>{{ description }}</p>
         </div>
+      </div>
+    </div>
+   {{else}}
+    <div class="card mx-auto">
+      <div class="card-body d-grid">
+        <p class="fs-4">There are no tasks yet.</p>
+        <a href="/tasks/new" class="btn btn-primary">Create Task</a>
       </div>
     </div>
   {{/each}}
