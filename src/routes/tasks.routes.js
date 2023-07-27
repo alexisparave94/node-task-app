@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
   } else {
     const newTask = new Task({ title, description })
     await newTask.save()
+    req.flash('success_msg', 'Task Created Successfully')
     res.redirect('/tasks')
   }
 })
@@ -36,11 +37,13 @@ router.get('/:id/edit',async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { title, description } = req.body
   await Task.findByIdAndUpdate(req.params.id, { title, description })
+  req.flash('success_msg', 'Task Updated Successfully')
   res.redirect('/tasks')
 })
 
 router.delete('/:id', async (req, res) => {
   await Task.findByIdAndDelete(req.params.id)
+  req.flash('success_msg', 'Task Deleted Successfully')
   res.redirect('/tasks')
 })
 

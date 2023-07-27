@@ -5,6 +5,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const indexRoutes = require('./routes/index.routes')
 const taskRouter = require('./routes/tasks.routes')
+const flash = require('connect-flash')
 
 const app = express()
 require('./config/db')
@@ -27,6 +28,14 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+app.use(flash())
+
+//Global variables
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.error_msg = req.flash('error_msg')
+  next()
+})
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')))
