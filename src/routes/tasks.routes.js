@@ -39,4 +39,9 @@ router.put('/:id', async (req, res) => {
   res.redirect('/tasks')
 })
 
+router.delete('/:id', async (req, res) => {
+  await Task.findByIdAndDelete(req.params.id)
+  res.redirect('/tasks')
+})
+
 module.exports = router

@@ -8,6 +8,12 @@
             <a href="/tasks/{{_id}}/edit"><i class="bi bi-pencil-square"></i></a>
           </h4>
           <p>{{ description }}</p>
+          <form action="/tasks/{{_id}}?_method=DELETE" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <div class="d-grid">
+              <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
