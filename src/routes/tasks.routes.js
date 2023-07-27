@@ -27,4 +27,10 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.get('/:id/edit',async (req, res) => {
+  const { id } = req.params
+  const task = await Task.findById(id).lean()
+  res.render('tasks/edit-task', {task})
+})
+
 module.exports = router
