@@ -3,8 +3,8 @@ const router = express.Router()
 const Task = require('../models/Task')
 
 router.get('/', async (req, res) => {
-  const tasks = Task.find()
-  res.render('tasks')
+  const tasks = await Task.find().sort({ date: 'desc' }).lean()
+  res.render('tasks', { tasks })
 })
 
 router.get('/new', (req, res) => {
@@ -25,6 +25,23 @@ router.post('/', async (req, res) => {
     await newTask.save()
     res.redirect('/tasks')
   }
+})
+
+router.get('/:id/edit',async (req, res) => {
+  const { id } = req.params
+  const task = await Task.findById(id).lean()
+  res.render('tasks/edit-task', {task})
+})
+
+router.put('/:id', async (req, res) => {
+  const { title, description } = req.body
+  await Task.findByIdAndUpdate(req.params.id, { title, description })
+  res.redirect('/tasks')
+})
+
+router.delete('/:id', async (req, res) => {
+  await Task.findByIdAndDelete(req.params.id)
+  res.redirect('/tasks')
 })
 
 module.exports = router
