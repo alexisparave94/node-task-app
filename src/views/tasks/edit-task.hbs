@@ -1,0 +1,22 @@
+<div class="col-md-4 mx-auto mt-4">
+  <div class="card">
+    <div class="card-header">
+        <h3>Edit Task</h3>
+    </div>
+    <div class="card-body">
+      <form action="/task/{{_id}}" method="POST">
+        <div class="mb-3">
+          <input type="text" class="form-control" name="title" value="{{task.title}}" placeholder="Title">
+        </div>
+        <div class="mb-3">
+          <textarea name="description" placeholder="Description" class="form-control">{{task.description}}</textarea>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary">
+            Edit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
