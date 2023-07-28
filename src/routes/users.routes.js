@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
+const User = require('../models/User')
 
 router.get('/signup', (req, res) => {
   res.render('users/signup')
 })
 
-router.post('/signup', (req, res) => {
+router.post('/signup', async (req, res) => {
   const { name, email, password, confirm_password } = req.body
   const errors = []
   if(!name) errors.push({ message: 'Please write a name' }) 
@@ -22,7 +23,18 @@ router.post('/signup', (req, res) => {
       confirm_password
     })
   } else {
-    res.send('ok')
+    const user = await User.findOne({ email })
+    if(user) {
+      errors.push({ message: 'The email is already registered' })
+      return res.render('users/signup', { 
+        errors, name, email, password, confirm_password
+       })
+    }
+    const newUser = new User({ name, email, password })
+    newUser.password = await newUser.encryptPassword(password)
+    await newUser.save()
+    req.flash('success_msg', 'User Created Successfully')
+    res.redirect('/tasks')
   }
 })
 
