@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
+const passport = require('passport')
 
 router.get('/signup', (req, res) => {
   res.render('users/signup')
@@ -37,5 +38,15 @@ router.post('/signup', async (req, res) => {
     res.redirect('/tasks')
   }
 })
+
+router.get('/signin', (req, res) => {
+  res.render('users/signin')
+})
+
+router.post('/signin', passport.authenticate('local', {
+  successRedirect: '/tasks',
+  failureRedirect: '/users/signin',
+  failureFlash: true
+}))
 
 module.exports = router

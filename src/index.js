@@ -7,9 +7,12 @@ const indexRoutes = require('./routes/index.routes')
 const taskRouter = require('./routes/tasks.routes')
 const userRouter = require('./routes/users.routes')
 const flash = require('connect-flash')
+const passport = require('passport')
 
+//Initializations
 const app = express()
 require('./config/db')
+require('./config/passport')
 
 //Settings
 app.set('views', path.join(__dirname, 'views'))
@@ -29,12 +32,15 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 
 //Global variables
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
   res.locals.error_msg = req.flash('error_msg')
+  res.locals.error = req.flash('error')
   next()
 })
 
