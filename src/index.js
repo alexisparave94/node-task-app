@@ -5,6 +5,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const indexRoutes = require('./routes/index.routes')
 const taskRouter = require('./routes/tasks.routes')
+const userRouter = require('./routes/users.routes')
 const flash = require('connect-flash')
 
 const app = express()
@@ -43,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //Routes
 app.use(indexRoutes)
 app.use('/tasks', taskRouter)
+app.use('/users', userRouter)
 
 // Server listening
 app.listen(process.env.PORT || 3000, () => {
