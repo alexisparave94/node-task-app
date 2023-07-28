@@ -4,7 +4,7 @@ const Task = require('../models/Task')
 const { isAuthenticated } = require('../helpers/auth')
 
 router.get('/', isAuthenticated, async (req, res) => {
-  const tasks = await Task.find().sort({ date: 'desc' }).lean()
+  const tasks = await Task.find({ user_id: req.user._id }).sort({ date: 'desc' }).lean()
   res.render('tasks', { tasks })
 })
 
@@ -22,7 +22,7 @@ router.post('/', isAuthenticated, async (req, res) => {
   if(errors.length > 0) {
     res.render('tasks/new-task', { errors, title, description })
   } else {
-    const newTask = new Task({ title, description })
+    const newTask = new Task({ title, description, user_id: req.user._id })
     await newTask.save()
     req.flash('success_msg', 'Task Created Successfully')
     res.redirect('/tasks')
