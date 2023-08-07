@@ -7,7 +7,7 @@ router.get('/signup', (req, res) => {
   res.render('users/signup')
 })
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res, netx) => {
   const { name, email, password, confirm_password } = req.body
   const errors = []
   if(!name) errors.push({ message: 'Please write a name' }) 
@@ -34,10 +34,13 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({ name, email, password })
     newUser.password = await newUser.encryptPassword(password)
     await newUser.save()
-    req.flash('success_msg', 'User Created Successfully')
-    res.redirect('/tasks')
+    netx()
   }
-})
+}, passport.authenticate('local', {
+  successRedirect: '/tasks',
+  failureRedirect: '/users/signup',
+  failureFlash: true
+}))
 
 router.get('/signin', (req, res) => {
   res.render('users/signin')
