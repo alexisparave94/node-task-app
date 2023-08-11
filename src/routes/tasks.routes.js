@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const Task = require('../models/Task')
 const { isAuthenticated } = require('../helpers/auth')
 const taskController = require('../controllers/taskController')
 
