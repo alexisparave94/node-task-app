@@ -20,29 +20,17 @@ const newSingup = (req, res) => {
 
 const singup = async (req, res, netx) => {
   const { name, email, password, confirm_password } = req.body
-  const errors = []
   const result = validationResult(req)
   
   if (result.isEmpty()){
-    if(password != confirm_password) {
-      errors.push({ msg: 'Password does not match' })
-    } else {
-      const user = await User.findOne({ email })
-      if(user) {
-        errors.push({ msg: 'The email is already registered' })
-        return res.render('users/signup', { 
-          errors, name, email, password, confirm_password
-        })
-      }
-      const newUser = new User({ name, email, password })
-      newUser.password = await newUser.encryptPassword(password)
-      await newUser.save()
-      return netx()
-    }
+    const newUser = new User({ name, email, password })
+    newUser.password = await newUser.encryptPassword(password)
+    await newUser.save()
+    return netx()
   }
 
   res.render('users/signup', {
-    errors: [...errors, ...result.array()],
+    errors: [...result.array()],
     name,
     email,
     password,
