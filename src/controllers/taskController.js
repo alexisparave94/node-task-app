@@ -1,5 +1,6 @@
-const { validationResult, Result } = require('express-validator');
-const Task = require('../models/Task')
+import { validationResult } from 'express-validator';
+
+import Task from '../models/Task.js'
 
 const getAllTasks = async (req, res) => {
   const tasks = await Task.find({ user_id: req.user._id }).sort({ date: 'desc' }).lean()
@@ -58,7 +59,7 @@ const deleteTask = async (req, res) => {
   res.redirect('/tasks')
 }
 
-module.exports = {
+export default {
   getAllTasks,
   getNew,
   createTask,

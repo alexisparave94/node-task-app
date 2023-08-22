@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const noteSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -7,4 +7,4 @@ const noteSchema = new mongoose.Schema({
   user_id: { type:String, required: true }
 })
 
-module.exports = mongoose.model('Task', noteSchema)
+export default mongoose.model('Task', noteSchema)

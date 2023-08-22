@@ -1,22 +1,24 @@
-const express = require('express')
-const path = require('path')
-const expHbs = require('express-handlebars')
-const methodOverride = require('method-override')
-const session = require('express-session')
-const indexRoutes = require('./routes/index.routes')
-const taskRouter = require('./routes/tasks.routes')
-const userRouter = require('./routes/users.routes')
-const flash = require('connect-flash')
-const passport = require('passport')
+import express from 'express'
+import path from 'path'
+import { engine } from 'express-handlebars'
+import methodOverride from 'method-override'
+import session from 'express-session'
+import flash from 'connect-flash'
+import passport from 'passport'
+
+import indexRoutes from './routes/index.routes.js'
+import taskRouter from './routes/tasks.routes.js'
+import userRouter from './routes/users.routes.js'
 
 //Initializations
 const app = express()
-require('./config/db')
-require('./config/passport')
+
+import './config/db.js'
+import './config/passport.js'
 
 //Settings
-app.set('views', path.join(__dirname, 'views'))
-app.engine('.hbs', expHbs.engine({
+app.set('views', path.join(process.cwd(), 'src','views'))
+app.engine('.hbs', engine({
   defaultLayout: 'main',
   layoutDir: path.join(app.get('views'), 'layouts'),
   partialDir: path.join(app.get('views'), 'partials'),
@@ -46,7 +48,7 @@ app.use((req, res, next) => {
 })
 
 //Static files
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(process.cwd(), 'src', 'public')))
 
 //Routes
 app.use(indexRoutes)
