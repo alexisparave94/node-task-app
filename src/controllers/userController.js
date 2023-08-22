@@ -18,7 +18,7 @@ const newSingup = (req, res) => {
   res.render('users/signup')
 }
 
-const singup = async (req, res, netx) => {
+const singup = async (req, res, next) => {
   const { name, email, password, confirm_password } = req.body
   const result = validationResult(req)
   
@@ -26,7 +26,7 @@ const singup = async (req, res, netx) => {
     const newUser = new User({ name, email, password })
     newUser.password = await newUser.encryptPassword(password)
     await newUser.save()
-    return netx()
+    return next()
   }
 
   res.render('users/signup', {
