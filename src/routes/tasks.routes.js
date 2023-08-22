@@ -16,7 +16,11 @@ router.post('/',
 
 router.get('/:id/edit', isAuthenticated, taskController.getEdit)
 
-router.put('/:id', isAuthenticated, taskController.updateTask)
+router.put('/:id',
+isAuthenticated,
+body('title').notEmpty().withMessage('Enter a title').isLength({ max: 30 }).withMessage('Title must not have more the 30 characters'),
+  body('description').notEmpty().withMessage('Enter a description'),
+taskController.updateTask)
 
 router.delete('/:id', isAuthenticated, taskController.deleteTask)
 
