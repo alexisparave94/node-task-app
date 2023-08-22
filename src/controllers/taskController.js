@@ -1,3 +1,4 @@
+const { validationResult, Result } = require('express-validator');
 const Task = require('../models/Task')
 
 const getAllTasks = async (req, res) => {
@@ -11,18 +12,19 @@ const getNew = (req, res) => {
 
 const createTask = async (req, res) => {
   const { title, description } = req.body
-  const errors = []
+  const result = validationResult(req)
 
-  if(!title) errors.push({ message: 'Please write a title' })
-  if(!description) errors.push({ message: 'Please write a description' })
-
-  if(errors.length > 0) {
-    res.render('tasks/new-task', { errors, title, description })
-  } else {
+  if(result.isEmpty()) {
     const newTask = new Task({ title, description, user_id: req.user._id })
     await newTask.save()
     req.flash('success_msg', 'Task Created Successfully')
     res.redirect('/tasks')
+  } else {
+    res.render('tasks/new-task', {
+      errors: [...result.array()],
+      title,
+      description
+    })
   }
 }
 
