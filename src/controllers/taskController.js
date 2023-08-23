@@ -1,5 +1,3 @@
-import { validationResult } from 'express-validator';
-
 import Task from '../models/Task.js'
 
 const getAllTasks = async (req, res) => {
@@ -13,20 +11,11 @@ const getNew = (req, res) => {
 
 const createTask = async (req, res) => {
   const { title, description } = req.body
-  const result = validationResult(req)
 
-  if (result.isEmpty()) {
-    const newTask = new Task({ title, description, user_id: req.user._id })
-    await newTask.save()
-    req.flash('success_msg', 'Task Created Successfully')
-    res.redirect('/tasks')
-  } else {
-    res.render('tasks/new-task', {
-      errors: [...result.array()],
-      title,
-      description
-    })
-  }
+  const newTask = new Task({ title, description, user_id: req.user._id })
+  await newTask.save()
+  req.flash('success_msg', 'Task Created Successfully')
+  res.redirect('/tasks')
 }
 
 const getEdit = async (req, res) => {
@@ -37,20 +26,10 @@ const getEdit = async (req, res) => {
 
 const updateTask = async (req, res) => {
   const { title, description } = req.body
-  const result = validationResult(req)
 
-  if (result.isEmpty()){
-    await Task.findByIdAndUpdate(req.params.id, { title, description })
-    req.flash('success_msg', 'Task Updated Successfully')
-    res.redirect('/tasks')
-  } else {
-    res.render('tasks/edit-task', {
-      errors: [...result.array()],
-      _id: req.params.id,
-      title,
-      description
-    })
-  }
+  await Task.findByIdAndUpdate(req.params.id, { title, description })
+  req.flash('success_msg', 'Task Updated Successfully')
+  res.redirect('/tasks')
 }
 
 const deleteTask = async (req, res) => {
