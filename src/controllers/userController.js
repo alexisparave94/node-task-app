@@ -1,5 +1,4 @@
 import passport from 'passport'
-import { validationResult } from 'express-validator';
 
 import User from '../models/User.js'
 
@@ -20,23 +19,12 @@ const newSingup = (req, res) => {
 }
 
 const singup = async (req, res, next) => {
-  const { name, email, password, confirm_password } = req.body
-  const result = validationResult(req)
-  
-  if (result.isEmpty()){
-    const newUser = new User({ name, email, password })
-    newUser.password = await newUser.encryptPassword(password)
-    await newUser.save()
-    return next()
-  }
+  const { name, email, password } = req.body
 
-  res.render('users/signup', {
-    errors: [...result.array()],
-    name,
-    email,
-    password,
-    confirm_password
-  })
+  const newUser = new User({ name, email, password })
+  newUser.password = await newUser.encryptPassword(password)
+  await newUser.save()
+  next()
 }
 
 const newSingin = (req, res) => {
