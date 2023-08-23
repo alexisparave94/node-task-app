@@ -1,8 +1,10 @@
-const express = require('express')
-const router = express.Router()
-const userController = require('../controllers/userController')
-const { body } = require('express-validator');
-const User = require('../models/User')
+import { Router } from 'express'
+import { body } from 'express-validator'
+
+import userController from '../controllers/userController.js'
+import User from '../models/User.js'
+
+const router = Router()
 
 router.get('/signup', userController.newSingup)
 
@@ -27,4 +29,4 @@ router.post('/signin', userController.authenticateSignin)
 
 router.get('/logout', userController.logout)
 
-module.exports = router
+export default router

@@ -6,7 +6,7 @@ const about = (req, res) => {
   res.render('about')
 }
 
-module.exports = {
+export default {
   index,
   about
 }

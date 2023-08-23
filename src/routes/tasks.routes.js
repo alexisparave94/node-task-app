@@ -1,8 +1,10 @@
-const express = require('express')
-const { body } = require('express-validator');
-const router = express.Router()
-const { isAuthenticated } = require('../helpers/auth')
-const taskController = require('../controllers/taskController')
+import { Router } from 'express'
+import { body } from 'express-validator'
+
+import { isAuthenticated } from '../helpers/auth.js'
+import taskController from '../controllers/taskController.js'
+
+const router = Router()
 
 router.get('/', isAuthenticated, taskController.getAllTasks)
 
@@ -24,4 +26,5 @@ taskController.updateTask)
 
 router.delete('/:id', isAuthenticated, taskController.deleteTask)
 
-module.exports = router
+// module.exports = router
+export default router

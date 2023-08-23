@@ -1,6 +1,7 @@
-const User = require('../models/User')
-const passport = require('passport')
-const { validationResult } = require('express-validator');
+import passport from 'passport'
+import { validationResult } from 'express-validator';
+
+import User from '../models/User.js'
 
 const authenticateSignup = passport.authenticate('local', {
   successRedirect: '/tasks',
@@ -47,7 +48,7 @@ const logout = (req, res) => {
   res.redirect('/')
 }
 
-module.exports = {
+export default {
   authenticateSignup,
   authenticateSignin,
   newSingup,
